@@ -1,0 +1,14 @@
+export TOKEN_SECRET="supersecret"
+export DOCS_URL="/api/docs"
+export REDOC_URL="/api/redoc"
+export RMQ_USER=user
+export RMQ_PASS=password
+export RMQ_VHOST="/filuta"
+export RMQ_HOST="rabbit"
+export RMQ_PORT="5672"
+export POSTGRES_HOST="0.0.0.0:5432"
+export POSTGRES_DB=backend
+export POSTGRES_USER=testuser
+export POSTGRES_PASSWORD=testpass
+export VERSION="0.0.1"
+export LOG_LEVEL="DEBUG"

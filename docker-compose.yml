@@ -1,0 +1,100 @@
+x-pg: &pg
+  POSTGRES_HOST: "postgres:5432"
+  POSTGRES_DB: backend
+  POSTGRES_USER: testuser
+  POSTGRES_PASSWORD: testpass
+
+x-rmq: &rmq
+  RABBITMQ_DEFAULT_USER: user
+  RABBITMQ_DEFAULT_PASS: password
+  RABBITMQ_DEFAULT_VHOST: "/filuta"
+
+x-core: &core
+  <<: [*pg]
+  VERSION: "0.0.1"
+  LOG_LEVEL: "DEBUG"
+  TOKEN_SECRET: "superdupersecret"
+  RMQ_USER: user
+  RMQ_PASS: password
+  RMQ_HOST: rabbit
+  RMQ_PORT: 5672
+  RMQ_VHOST: "/filuta"
+
+x-api: &api
+  <<: *core
+  DOCS_URL: "/api/docs"
+  REDOC_URL:  "/api/redocs"
+  TOKEN_SECRET: "superdupersecret"
+
+
+services:
+  api:
+    build:
+      dockerfile: api/Dockerfile
+      context: backend
+    restart: unless-stopped
+    environment:
+      <<: *api
+    networks:
+      internal:
+    ports:
+      - "8000:8000"
+  redis:
+    image:  redis
+    restart: unless-stopped
+    volumes:
+      - type: volume
+        source: redis-data
+        target: /data
+    networks:
+      internal:
+        aliases:
+          - redis
+  postgres:
+    image: pgvector/pgvector:pg17
+    restart: unless-stopped
+    environment:
+      POSTGRES_HOST: postgres
+      POSTGRES_DB: backend
+      POSTGRES_USER: testuser
+      POSTGRES_PASSWORD: testpass
+    volumes:
+      - type: volume
+        source: postgres-data
+        target: /var/lib/postgresql/data/
+    networks:
+      internal:
+        aliases:
+          - postgres
+    ports:
+      - "5432:5432"
+  rabbit:
+    image:  "rabbitmq:3-management"
+    restart: unless-stopped
+    environment:
+      RABBITMQ_DEFAULT_USER: user
+      RABBITMQ_DEFAULT_PASS: password
+      RABBITMQ_DEFAULT_VHOST: "/filuta"
+    networks:
+      internal:
+        aliases:
+          - rabbit
+    ports:
+      - "15672:15672"
+  #content-filtering:
+    #build:
+      #dockerfile: ./recommender/Dockerfile
+      #context: backend
+    #restart: unless-stopped
+    #environment:
+      #<<: *core-env
+    #networks:
+      #- internal
+
+volumes:
+  postgres-data:
+  redis-data:
+
+networks:
+  internal:
+    driver: bridge

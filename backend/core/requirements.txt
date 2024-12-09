@@ -1,0 +1,7 @@
+pika
+asyncpg
+numpy
+sqlalchemy
+pgvector
+psycopg2-binary
+pydantic-settings
