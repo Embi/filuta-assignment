@@ -1,9 +1,9 @@
 # Filuta Assignment
 This repository presents a possible solution to a simple car recommender system
 design. The solution primarily focuses on back-end software/infrastructure engineering
-aspects of the problem. Front-end layer is completely omitted and datascience
-solution is rather naive (with a lot of assumptions pulled out of my ass).
-Tho it was necessary to pick some datascience solution as it dictates some parts
+aspects of the problem. Front-end layer is completely omitted and data science
+solution is rather naive (with a lot of assumptions pulled out of thin air).
+But it was necessary to pick some data science solution as it dictates some parts
 of the presented back-end tech stack (like a database and event handling...).
 
 The solution presented here consists of:
@@ -13,7 +13,7 @@ The solution presented here consists of:
 * [Prototype](#prototype)
 
 # Naive recommender
-As mentioned in the introduction, in my opinion, some datascience solution had
+As mentioned in the introduction, in my opinion, some data science solution had
 to be picked to be able to design the back-end stack.
 
 After a quick research, I essentially ruled out using any complex ML solutions
@@ -67,8 +67,8 @@ In a nutshell the goal was:
 - to have a functional API microservice that can query basic entities form the DB (User, Listing)
   and that can emit events about users activity.
 - to have a functional vector similarity search
-- to have a consumer for user activity events that (a.k.a content/collaborative
-  pipelines) that then updates users preference vector (based on the activity)
+- to have a consumer for user activity events (i.e., content/collaborative
+  pipelines) that then updates users preference vectors accordingly.
 
 Unfortunately not all(/much) got accomplished :-(.
 
