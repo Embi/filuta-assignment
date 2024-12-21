@@ -1,0 +1,50 @@
+{
+  "users": [
+    {
+      "name": "backend",
+      "password_hash": "PYjvlpa7T0Y6/uvSoQdJ4IINyxGy/xm6Io5ShMKYzc4KJDfL",
+      "hashing_algorithm": "rabbit_password_hashing_sha256",
+      "tags": "administrator"
+    }
+  ],
+  "vhosts": [
+    {
+      "name": "filuta"
+    }
+  ],
+    "permissions": [
+    {
+      "user": "backend",
+      "vhost": "filuta",
+      "configure": ".*",
+      "write": ".*",
+      "read": ".*"
+    }
+  ],
+  "exchanges": [
+    {
+      "name": "recommender",
+      "vhost": "filuta",
+      "type": "topic",
+      "durable": true,
+      "auto_delete": false
+    }
+  ],
+  "queues": [
+    {
+      "name": "user_activity",
+      "vhost": "filuta",
+      "durable": true,
+      "auto_delete": false
+    }
+  ],
+  "bindings": [
+    {
+      "source": "recommender",
+      "vhost": "filuta",
+      "destination": "user_activity",
+      "destination_type": "queue",
+      "routing_key": "user.activity.*"
+    }
+  ]
+}
